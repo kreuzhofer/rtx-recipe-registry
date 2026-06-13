@@ -1,0 +1,36 @@
+recipe_version: "2"
+model: Qwen/Qwen3-8B
+runtime: vllm
+container: rtx-vllm:latest   # entrypoint-less wrapper (see ../../images/) — required for sparkrun on amd64
+
+metadata:
+  description: Qwen3 8B (fp8 dynamic) — amd64 + NVIDIA RTX, 32GB class (e.g. RTX 5090)
+  maintainer: kreuzhofer
+  model_params: 8B
+  model_dtype: fp8
+  category: chat
+
+defaults:
+  port: 8000
+  host: 0.0.0.0
+  tensor_parallel: 1
+  gpu_memory_utilization: 0.85
+  max_model_len: 16384
+  served_model_name: qwen3-8b
+  quantization: fp8
+
+executor_config:
+  devices: []                 # drop sparkrun's rootless --device /dev/infiniband (no InfiniBand on RTX hosts)
+  restart_policy: unless-stopped
+
+# fp8 dynamic quantization of the bf16 checkpoint — supported on consumer Blackwell (sm_120).
+command: |
+  vllm serve {model} \
+      --served-model-name {served_model_name} \
+      --host {host} \
+      --port {port} \
+      --tensor-parallel-size {tensor_parallel} \
+      --gpu-memory-utilization {gpu_memory_utilization} \
+      --max-model-len {max_model_len} \
+      --quantization {quantization} \
+      --trust-remote-code

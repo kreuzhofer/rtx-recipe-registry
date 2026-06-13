@@ -1,0 +1,5 @@
+registries:
+  - name: rtx
+    description: amd64 + NVIDIA RTX inference recipes (Blackwell/Ada — RTX 5090, RTX PRO 6000, etc.)
+    recipes: recipes
+    visible: true
