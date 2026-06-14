@@ -1,19 +1,19 @@
 recipe_version: "2"
-model: Qwen/Qwen3-8B
+model: cyankiwi/Qwen3.5-4B-AWQ-4bit
 runtime: vllm
 container: rtx-vllm:latest   # entrypoint-less wrapper (see ../../images/)
-  # reasoning
+  # int4 variant
 metadata:
-  description: Qwen3-8B — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
+  description: Qwen3.5-4B-AWQ-4bit — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
   maintainer: kreuzhofer
   category: chat
 defaults:
   port: 8000
   host: 0.0.0.0
   tensor_parallel: 1
-  gpu_memory_utilization: 0.85
+  gpu_memory_utilization: 0.9
   max_model_len: 16384
-  quantization: fp8
+  quantization: awq_marlin
 executor_config:
   devices: []                 # drop sparkrun rootless --device /dev/infiniband (no IB on RTX)
   restart_policy: unless-stopped

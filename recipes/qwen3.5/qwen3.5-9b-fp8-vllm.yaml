@@ -1,10 +1,9 @@
 recipe_version: "2"
-model: Qwen/Qwen3-8B
+model: Qwen/Qwen3.5-9B
 runtime: vllm
 container: rtx-vllm:latest   # entrypoint-less wrapper (see ../../images/)
-  # reasoning
 metadata:
-  description: Qwen3-8B — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
+  description: Qwen3.5-9B — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
   maintainer: kreuzhofer
   category: chat
 defaults:

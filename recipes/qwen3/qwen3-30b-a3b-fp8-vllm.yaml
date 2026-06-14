@@ -1,18 +1,18 @@
 recipe_version: "2"
-model: Qwen/Qwen3-1.7B
+model: Qwen/Qwen3-30B-A3B-FP8
 runtime: vllm
 container: rtx-vllm:latest   # entrypoint-less wrapper (see ../../images/)
-  # reasoning
+  # MoE 30B-A3B fp8 ckpt ~30GB tight
 metadata:
-  description: Qwen3-1.7B — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
+  description: Qwen3-30B-A3B-FP8 — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
   maintainer: kreuzhofer
   category: chat
 defaults:
   port: 8000
   host: 0.0.0.0
   tensor_parallel: 1
-  gpu_memory_utilization: 0.85
-  max_model_len: 16384
+  gpu_memory_utilization: 0.90
+  max_model_len: 8192
 executor_config:
   devices: []                 # drop sparkrun rootless --device /dev/infiniband (no IB on RTX)
   restart_policy: unless-stopped

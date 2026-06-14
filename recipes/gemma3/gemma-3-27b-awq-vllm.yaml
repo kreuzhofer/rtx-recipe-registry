@@ -1,0 +1,22 @@
+recipe_version: "2"
+model: gaunernst/gemma-3-27b-it-int4-awq
+runtime: vllm
+container: rtx-vllm:latest   # entrypoint-less wrapper (see ../../images/)
+  # GATED on HF — agent token needs license acceptance
+  # community AWQ — verify
+metadata:
+  description: gemma-3-27b-it-int4-awq — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
+  maintainer: kreuzhofer
+  category: chat
+defaults:
+  port: 8000
+  host: 0.0.0.0
+  tensor_parallel: 1
+  gpu_memory_utilization: 0.90
+  max_model_len: 8192
+  quantization: awq_marlin
+executor_config:
+  devices: []                 # drop sparkrun rootless --device /dev/infiniband (no IB on RTX)
+  restart_policy: unless-stopped
+command: |
+  vllm serve {model} --host {host} --port {port} -tp {tensor_parallel} --gpu-memory-utilization {gpu_memory_utilization} --max-model-len {max_model_len} --quantization {quantization} --trust-remote-code

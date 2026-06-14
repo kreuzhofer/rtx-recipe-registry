@@ -1,9 +1,10 @@
 recipe_version: "2"
-model: Qwen/Qwen2.5-14B-Instruct-AWQ
+model: Qwen/Qwen2.5-7B-Instruct-AWQ
 runtime: vllm
 container: rtx-vllm:latest   # entrypoint-less wrapper (see ../../images/)
+  # awq variant
 metadata:
-  description: Qwen2.5-14B-Instruct-AWQ — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
+  description: Qwen2.5-7B-Instruct-AWQ — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
   maintainer: kreuzhofer
   category: chat
 defaults:

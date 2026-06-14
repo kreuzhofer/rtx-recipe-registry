@@ -1,9 +1,10 @@
 recipe_version: "2"
-model: Qwen/Qwen2.5-14B-Instruct-AWQ
+model: casperhansen/yi-1.5-34b-chat-awq
 runtime: vllm
 container: rtx-vllm:latest   # entrypoint-less wrapper (see ../../images/)
+  # int4 — verify ckpt
 metadata:
-  description: Qwen2.5-14B-Instruct-AWQ — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
+  description: yi-1.5-34b-chat-awq — amd64 + NVIDIA RTX (32GB, e.g. RTX 5090)
   maintainer: kreuzhofer
   category: chat
 defaults:
@@ -11,10 +12,10 @@ defaults:
   host: 0.0.0.0
   tensor_parallel: 1
   gpu_memory_utilization: 0.90
-  max_model_len: 16384
+  max_model_len: 8192
   quantization: awq_marlin
 executor_config:
   devices: []                 # drop sparkrun rootless --device /dev/infiniband (no IB on RTX)
   restart_policy: unless-stopped
 command: |
-  vllm serve {model} --host {host} --port {port} -tp {tensor_parallel} --gpu-memory-utilization {gpu_memory_utilization} --max-model-len {max_model_len} --quantization {quantization} --enable-auto-tool-choice --tool-call-parser hermes --trust-remote-code
+  vllm serve {model} --host {host} --port {port} -tp {tensor_parallel} --gpu-memory-utilization {gpu_memory_utilization} --max-model-len {max_model_len} --quantization {quantization} --trust-remote-code
