@@ -61,6 +61,7 @@ MODELS=(
   qwen3.5/qwen3.5-4b-awq-vllm
   qwen3.5/qwen3.5-9b-fp8-vllm
   qwen3.5/qwen3.5-27b-fp8-vllm
+  qwen2.5-coder/qwen2.5-coder-32b-gptq-vllm
   qwen3.6/qwen3.6-27b-fp8-vllm
 )
 
