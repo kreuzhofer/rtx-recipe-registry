@@ -165,7 +165,7 @@ for rf in "${MODELS[@]}"; do
     record "$rf" deploy="$st" error="${log//\"/ }"
     undeploy "$did"; continue
   fi
-  if ! wait_api 360; then
+  if ! wait_api 600; then
     echo "  API not ready"; record "$rf" deploy=running api=not-ready
     undeploy "$did"; continue
   fi
